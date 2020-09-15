@@ -1,4 +1,4 @@
-To add the code to hydra evaluate this line:
+To add the code to hydra use fetch, for example:
 
 ```javascript
 fetch('https://raw.githubusercontent.com/juaneduardoflores/Hydra-AudioReactive-Functions/master/AudioReactivity.js')
