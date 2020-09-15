@@ -44,7 +44,7 @@ GET_STATE = bin => {
   } else if (!a.fft[bin] && states[bin]) {
     states[bin] = false; // LOW
   }
-  return state;
+  return states[bin];
 };
 
 /**
