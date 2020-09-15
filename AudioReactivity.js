@@ -1,19 +1,19 @@
 toggles = [];
 states = [];
 
-let xdir = 1;
-let tsnap = 0;
-let psnap = 0;
-let nsnap = 0;
-let ran = 1;
+xdir = 1;
+t_snapshot = 0;
+psnap = 0;
+nsnap = 0;
 
+// TODO: Clean up this global function. Possibly might not need it at all.
+let ran = 1;
 let freq;
 let noiseScale;
 let slide;
 const fftmult = 20;
 let fft0, fft1, fft2, fft3;
 let ranbin;
-
 GLOBAL = () => {
   xdir = -xdir;
   tsnap = time;
@@ -131,10 +131,16 @@ LOWEST = (bin, vt, vf) => {
   }
 };
 
+/**
+ * CHANGE_DIR ([bin number], [hydra's time variable])
+ * A function that changes direction of the Hydra scroll functions each
+ * time it reaches HIGH state.
+ */
 CHANGE_DIR = (bin, time) => {
   let value;
+  lastState = states[bin];
   st = GET_STATE(bin);
-  if (st) {
+  if (st && st != lastState) {
     xdir = -xdir;
     t_snapshot = time;
   }
@@ -153,10 +159,11 @@ CHANGE_DIR = (bin, time) => {
     value = diff + -t_increment;
     nsnap = value;
   }
-  return value;
+  return value % 1;
 };
 
-RANBIN = () => {
+// TODO: See if getting a random bin is possible
+GET_RANBIN = () => {
   rb = Math.floor(Math.random() * bintotal);
   console.log(rb);
   return rb;
