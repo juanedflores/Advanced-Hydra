@@ -1,15 +1,16 @@
-let toggle = false;
+const bintotal = 5;
+let states = [];
+
 let xdir = 1;
 let tsnap = 0;
 let psnap = 0;
 let nsnap = 0;
 let ran = 1;
+
 let freq;
 let noiseScale;
 let slide;
-let snapshot;
 const fftmult = 20;
-const bintotal = 5;
 let fft0, fft1, fft2, fft3;
 let s1, s2, s3;
 let ranbin;
@@ -24,7 +25,6 @@ GLOBAL = () => {
   fft1 = a.fft[1] * fftmult;
   fft2 = a.fft[2] * fftmult;
   fft3 = a.fft[3] * fftmult;
-  snapshot = time;
   ranbin = Math.floor(Math.random() * bintotal);
   if (ran > 0.5) {
     slide = 1;
@@ -33,73 +33,102 @@ GLOBAL = () => {
   }
 };
 
-TOGGLE = bin => {
-  if (a.fft[bin] && !toggle) {
-    toggle = true;
-    GLOBAL();
-  } else if (!a.fft[bin] && toggle) {
-    toggle = false;
+/**
+ * A boolean assigned to the variable "state" will be switched from false to
+ * true whenever the entered bin level crosses the cutoff (HIGH state). When
+ * it crosses the cutoff back down when state is true, the value will be switched
+ * back to false (LOW state).
+ */
+GET_STATE = bin => {
+  if (a.fft[bin] && !states[bin]) {
+    states[bin] = true; // HIGH
+  } else if (!a.fft[bin] && states[bin]) {
+    states[bin] = false; // LOW
   }
-  return toggle;
+  return state;
 };
 
-HIGH = (bin, v) => {
-  tog = TOGGL(bin);
-  if (tog) {
-    return v;
+/**
+ * HIGH ([bin number], [returned value if true], [returned value if false])
+ * A function that returns the entered value 'vt' only if
+ * the current state is HIGH. (if state == true)
+ * Returns 'vf' otherwise.
+ */
+HIGH = (bin, vt, vf) => {
+  st = GET_STATE(bin);
+  if (st) {
+    return vt;
   } else {
-    return 0;
+    return vf;
   }
 };
 
-LOW = (bin, v) => {
-  tog = TOGGLE(bin);
-  if (!tog) {
-    return v;
+/**
+ * LOW ([bin number], [returned value if true], [returned value if false])
+ * A function that returns the entered value 'vt' only if
+ * the current state for the entered bin is LOW. (if state == false)
+ * Returns 'vf' otherwise.
+ */
+LOW = (bin, vt, vf) => {
+  st = GET_STATE(bin);
+  if (!st) {
+    return vt;
   } else {
-    return 0;
+    return vf;
   }
 };
 
-HIGHEST = (bin, v) => {
+/**
+ * HIGHEST ([bin number], [returned value if true], [returned value if false])
+ * A function that returns the entered value 'vt' only
+ * if the entered bin has the HIGHEST bin level out of all of the
+ * bins AND if it is on a HIGH state. Returns 'vf' otherwise.
+ */
+HIGHEST = (bin, vt, vf) => {
   const values = [];
-  for (let i = 0; i < bintotal; i++) {
+  for (let i = 0; i < states.length; i++) {
     values.push(a.fft[i]);
   }
-  let max = values[0];
   var maxIndex = 0;
+  let max = values[maxIndex];
   for (let i = 1; i < values.length; i++) {
     if (values[i] > max) {
-      maxIndex = i;
       max = values[i];
+      maxIndex = i;
     }
   }
-  tog = TOGGLE(bin);
-  if (maxIndex == bin && tog) {
-    return v;
+  st = GET_STATE(bin);
+  if (maxIndex == bin && st) {
+    return vt;
   } else {
-    return 0;
+    return vf;
   }
 };
 
-LOWEST = (bin, v) => {
+/**
+ * LOWEST ([bin number], [returned value if true], [returned value if false])
+ * A function that returns the entered value 'vt' only
+ * if the entered bin has the LOWEST bin level out of all of the
+ * bins AND if it is on a HIGH state. Returns 'vf' otherwise.
+ */
+LOWEST = (bin, vt, vf) => {
   const values = [];
-  for (let i = 0; i < bintotal; i++) {
+  for (let i = 0; i < states.length; i++) {
     values.push(a.fft[i]);
   }
-  let min = values[0];
   var minIndex = 0;
+  let min = values[minIndex];
   for (let i = 1; i < values.length; i++) {
     if (values[i] < min) {
-      minIndex = i;
       min = values[i];
+      minIndex = i;
     }
   }
-  tog = TOGGLE(bin);
-  if (minIndex == bin && tog) {
-    return v;
+  st = GET_STATE(bin);
+  if (minIndex == bin && st) {
+    return vt;
   } else {
-    return 0;
+    return vf;
   }
 };
 
