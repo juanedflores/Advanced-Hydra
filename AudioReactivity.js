@@ -1,5 +1,4 @@
-const bintotal = 5;
-let states = [];
+states = [];
 
 let xdir = 1;
 let tsnap = 0;
