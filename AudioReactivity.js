@@ -1,3 +1,4 @@
+toggles = [];
 states = [];
 
 let xdir = 1;
@@ -11,7 +12,6 @@ let noiseScale;
 let slide;
 const fftmult = 20;
 let fft0, fft1, fft2, fft3;
-let s1, s2, s3;
 let ranbin;
 
 GLOBAL = () => {
@@ -131,25 +131,27 @@ LOWEST = (bin, vt, vf) => {
   }
 };
 
-changeDirection = (bin, time, speed) => {
+CHANGE_DIR = (bin, time) => {
   let value;
-  TOGGLE(bin);
-  tinc = ((time * speed) % 1) - ((tsnap * speed) % 1);
+  st = GET_STATE(bin);
+  if (st) {
+    xdir = -xdir;
+    t_snapshot = time;
+  }
+  let t_increment = (time % 1) - (t_snapshot % 1);
   if (xdir == 1) {
-    value = (time * speed) % 1;
+    value = time % 1;
     if (nsnap) {
-      value = 1 - Math.abs(nsnap) + tinc;
+      value = 1 - Math.abs(nsnap) + t_increment;
       psnap = value;
     }
   } else if (xdir == -1) {
-    diff = (1 - ((tsnap * speed) % 1)) * -1;
-    value = diff + -tinc;
-    nsnap = value;
+    diff = (1 - (t_snapshot % 1)) * -1;
     if (psnap) {
       diff = (1 - psnap) * -1;
-      value = diff + -tinc;
-      nsnap = value;
     }
+    value = diff + -t_increment;
+    nsnap = value;
   }
   return value;
 };
