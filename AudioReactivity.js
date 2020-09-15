@@ -33,10 +33,10 @@ GLOBAL = () => {
 };
 
 /**
- * A boolean assigned to the variable "state" will be switched from false to
- * true whenever the entered bin level crosses the cutoff (HIGH state). When
- * it crosses the cutoff back down when state is true, the value will be switched
- * back to false (LOW state).
+ * A boolean assigned to the variable of an array called "states" will be
+ * switched from false to true whenever the entered bin level crosses the
+ * cutoff (HIGH state). When it crosses the cutoff back down when state is
+ * true, the value will be switched back to false (LOW state).
  */
 GET_STATE = bin => {
   if (a.fft[bin] && !states[bin]) {
