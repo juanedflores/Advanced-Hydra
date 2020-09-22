@@ -1,3 +1,7 @@
+/*
+ * I grabbed this code from a Hydra club meeting, and forgot who shared it.
+ * It's not mine so thank you to whoever shared :)
+ */
 // Easy-to-use functions for image using Ritchse
 window.initImg = function (source, url, isVideo = false) {
   var img = document.createElement("img");
@@ -13,5 +17,5 @@ osc().constructor.prototype.correctScale = function (source) {
     ((source.src.width / source.src.height) * innerHeight) / innerWidth
   );
 };
-initImg(s0, "https://i.imgur.com/yOvRyS2.jpg");
-src(s0).correctScale(s0).out();
+//initImg(s0, "https://i.imgur.com/yOvRyS2.jpg");
+//src(s0).correctScale(s0).out();
