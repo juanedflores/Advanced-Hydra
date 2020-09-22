@@ -1,40 +1,18 @@
+// bin changes
 toggles = [];
 states = [];
 
-xdir = 1;
+// handle time.
 t_snapshot = 0;
 psnap = 0;
 nsnap = 0;
 
-// TODO: Clean up this global function. Possibly might not need it at all.
-let ran = 1;
-let freq;
-let noiseScale;
-let slide;
-const fftmult = 20;
-let fft0, fft1, fft2, fft3;
-let ranbin;
-GLOBAL = () => {
-  xdir = -xdir;
-  tsnap = time;
-  ran = Math.random();
-  freq = Math.floor(ran * 20) + 4;
-  noiseScale = Math.floor(ran * 5) + 4;
-  fft0 = a.fft[0] * fftmult;
-  fft1 = a.fft[1] * fftmult;
-  fft2 = a.fft[2] * fftmult;
-  fft3 = a.fft[3] * fftmult;
-  ranbin = Math.floor(Math.random() * bintotal);
-  if (ran > 0.5) {
-    slide = 1;
-  } else {
-    slide = 0;
-  }
-};
+// scroll() direction
+xdir = 1;
 
 /**
- * A boolean assigned to the variable of an array called "states" will be
- * switched from false to true whenever the entered bin level crosses the
+ * A boolean assigned to a bin within the array called "states" will be
+ * switched from false to true whenever the entered bin level crosses over the
  * cutoff (HIGH state). When it crosses the cutoff back down when state is
  * true, the value will be switched back to false (LOW state).
  */
@@ -81,7 +59,7 @@ LOW = (bin, vt, vf) => {
  * HIGHEST ([bin number], [returned value if true], [returned value if false])
  * A function that returns the entered value 'vt' only
  * if the entered bin has the HIGHEST bin level out of all of the
- * bins AND if it is on a HIGH state. Returns 'vf' otherwise.
+ * bins AND if it is in a HIGH state. Returns 'vf' otherwise.
  */
 HIGHEST = (bin, vt, vf) => {
   const values = [];
@@ -108,7 +86,7 @@ HIGHEST = (bin, vt, vf) => {
  * LOWEST ([bin number], [returned value if true], [returned value if false])
  * A function that returns the entered value 'vt' only
  * if the entered bin has the LOWEST bin level out of all of the
- * bins AND if it is on a HIGH state. Returns 'vf' otherwise.
+ * bins AND if it is in a HIGH state. Returns 'vf' otherwise.
  */
 LOWEST = (bin, vt, vf) => {
   const values = [];
@@ -132,11 +110,11 @@ LOWEST = (bin, vt, vf) => {
 };
 
 /**
- * CHANGE_DIR ([bin number], [hydra's time variable])
+ * CHANGE_DIR_SCROLL ([bin number], [hydra's time variable])
  * A function that changes direction of the Hydra scroll functions each
- * time it reaches HIGH state.
+ * time it reaches a HIGH state.
  */
-CHANGE_DIR = (bin, time) => {
+CHANGE_DIR_SCROLL = (bin, time) => {
   let value;
   lastState = states[bin];
   st = GET_STATE(bin);
@@ -160,11 +138,4 @@ CHANGE_DIR = (bin, time) => {
     nsnap = value;
   }
   return value % 1;
-};
-
-// TODO: See if getting a random bin is possible
-GET_RANBIN = () => {
-  rb = Math.floor(Math.random() * bintotal);
-  console.log(rb);
-  return rb;
 };
