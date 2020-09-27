@@ -8,7 +8,7 @@ psnap = 0;
 nsnap = 0;
 
 // scroll() direction
-xdir = 1;
+DIR = 1;
 
 /**
  * A boolean assigned to a bin within the array called "states" will be
@@ -119,17 +119,17 @@ CHANGE_DIR_SCROLL = (bin, time) => {
   lastState = states[bin];
   st = GET_STATE(bin);
   if (st && st != lastState) {
-    xdir = -xdir;
+    DIR = -DIR;
     t_snapshot = time;
   }
   let t_increment = (time % 1) - (t_snapshot % 1);
-  if (xdir == 1) {
+  if (DIR == 1) {
     value = time % 1;
     if (nsnap) {
       value = 1 - Math.abs(nsnap) + t_increment;
       psnap = value;
     }
-  } else if (xdir == -1) {
+  } else if (DIR == -1) {
     diff = (1 - (t_snapshot % 1)) * -1;
     if (psnap) {
       diff = (1 - psnap) * -1;
