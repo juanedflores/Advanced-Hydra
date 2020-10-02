@@ -28,5 +28,8 @@ src(s0).correctScale(s0).out();
 #### HIGHEST()
 `HIGHEST( audiobin, valuetrue, valuefalse )`
 
+#### LOWEST()
+`LOWEST( audiobin, valuetrue, valuefalse )`
+
 #### CHANGE_DIR_SCROLL()
 `CHANGE_DIR_SCROLL( audiobin, time )`
