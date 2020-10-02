@@ -1,6 +1,6 @@
 // bin changes
 toggles = [];
-states = [];
+states = []; // TODO: Not sure how to use this.
 
 // handle time.
 t_snapshot = 0;
@@ -161,7 +161,7 @@ FADE = (start, target, alpha) => {
   };
 };
 
-// Easy-to-use functions for image using Ritchse
+// Easy-to-use functions for image by Ritchse
 window.initImg = function (source, url, isVideo = false) {
   var img = document.createElement("img");
   img.crossOrigin = "anonymous";
