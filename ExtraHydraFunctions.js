@@ -139,3 +139,41 @@ CHANGE_DIR_SCROLL = (bin, time) => {
   }
   return value % 1;
 };
+
+///////////////////////// VISUAL /////////////////////////
+/**
+ * FADE ([start], [target], [alpha])
+ * A function to fade into a target value from a starting value.
+ * Credit goes to Charlie Roberts for sharing this in the Hydra toplap chat.
+ */
+FADE = (start, target, alpha) => {
+  let t = target;
+  let s = start;
+  let running = true;
+  return () => {
+    if (running) {
+      s += alpha * (t - s);
+      if (Math.abs(target - s < 0.0001)) running = false;
+    } else {
+      return target;
+    }
+    return s;
+  };
+};
+
+// Easy-to-use functions for image using Ritchse
+window.initImg = function (source, url, isVideo = false) {
+  var img = document.createElement("img");
+  img.crossOrigin = "anonymous";
+  img.src = url;
+  img.onload = function () {
+    source.init({ src: img, dynamic: isVideo });
+  };
+};
+
+osc().constructor.prototype.correctScale = function (source) {
+  return this.scale(
+    1,
+    ((source.src.width / source.src.height) * innerHeight) / innerWidth
+  );
+};
