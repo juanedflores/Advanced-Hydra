@@ -161,7 +161,11 @@ FADE = (start, target, alpha) => {
   };
 };
 
-// Easy-to-use functions for image by Ritchse
+/**
+ * initImg ([source], [url], [isVideo=false])
+ * A function to add images or video to Hydra.
+ * Credit goes to Ritchse for sharing this in the Hydra toplap chat and github repo.
+ */
 window.initImg = function (source, url, isVideo = false) {
   var img = document.createElement("img");
   img.crossOrigin = "anonymous";
