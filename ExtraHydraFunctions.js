@@ -153,7 +153,9 @@ FADE = (start, target, alpha) => {
   return () => {
     if (running) {
       s += alpha * (t - s);
-      if (Math.abs(target - s < 0.0001)) running = false;
+      if (Math.abs(target - s) < 0.0001) {
+        running = false;
+      }
     } else {
       return target;
     }

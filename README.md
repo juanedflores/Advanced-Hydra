@@ -19,7 +19,7 @@ src(s0).correctScale(s0).out();
 ```
 
 #### FADE()
-`.FADE( start, target, alpha )`
+`FADE( start, target, alpha )`
 
 ### Sound:
 #### HIGH()
