@@ -183,3 +183,8 @@ osc().constructor.prototype.correctScale = function (source) {
     ((source.src.width / source.src.height) * innerHeight) / innerWidth
   );
 };
+
+///////////////////////// ARRAYS /////////////////////////
+Array.prototype.sample = function () {
+  return this[Math.floor(Math.random() * this.length)];
+};
