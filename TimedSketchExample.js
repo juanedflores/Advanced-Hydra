@@ -19,7 +19,7 @@ START = () => {
     if (countdown == 0) {
       console.log("START!");
       clearInterval(countdownInterval);
-      timestarted = true;
+      timerstarted = true;
       timeinit = time;
       main();
     } else {
