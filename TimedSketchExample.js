@@ -6,7 +6,7 @@
 // boolean to check if sketch and time has started.
 timerstarted = false;
 // save the amount of time elapsed before user started timer.
-timeinit = 0;
+timediff = 0;
 
 /*
  * Evaluate START() in the web console to start the sketch
@@ -20,7 +20,7 @@ START = () => {
       console.log("START!");
       clearInterval(countdownInterval);
       timerstarted = true;
-      timeinit = time;
+      timediff = time;
       main();
     } else {
       console.log(countdown);
@@ -42,10 +42,10 @@ GLOBAL = () => {
 
   // TIME SCRIPT
   if (timestarted) {
-    if (time - timeinit > 10) {
+    if (time - timediff > 10) {
       console.log("ten seconds..");
     }
-    if (time - timeinit > 20) {
+    if (time - timediff > 20) {
       console.log("twenty seconds..");
     }
   }
