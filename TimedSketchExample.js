@@ -42,10 +42,10 @@ GLOBAL = () => {
 
   // TIME SCRIPT
   if (timestarted) {
-    if (time > 10) {
+    if (time - timeinit > 10) {
       console.log("ten seconds..");
     }
-    if (time > 20) {
+    if (time - timeinit > 20) {
       console.log("twenty seconds..");
     }
   }
